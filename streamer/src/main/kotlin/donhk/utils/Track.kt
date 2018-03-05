@@ -1,6 +1,10 @@
 package donhk.utils
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Track constructor() {
+    public var _id: String = ""
     public var title: String = ""
     public var location: String = ""
     public var genre: String = ""

@@ -1,5 +1,6 @@
 package donhk.services
 
+import org.ektorp.CouchDbConnector
 import org.ektorp.http.StdHttpClient
 import org.ektorp.impl.StdCouchDbInstance
 import org.ektorp.impl.StdCouchDbConnector
@@ -7,7 +8,7 @@ import org.ektorp.impl.StdCouchDbConnector
 
 class DataSource constructor(private val url: String, private val dbName: String) {
 
-    fun connect2Couch(): StdCouchDbConnector {
+    fun connect2Couch(): CouchDbConnector {
         val httpClient = StdHttpClient.Builder().url(url).build()
         val dbInstance = StdCouchDbInstance(httpClient)
         val connection = StdCouchDbConnector(dbName, dbInstance)

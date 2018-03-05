@@ -30,6 +30,8 @@ dependencies {
     compile "com.mpatric:mp3agic:0.9.1"
     compile 'org.ektorp:org.ektorp:1.5.0'
     compile 'io.reactivex:rxjava:1.3.6'
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.slf4j:slf4j-simple:1.6.4'
 }
 
 compileKotlin {
@@ -39,4 +41,23 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+sourceSets {
+    main {
+        kotlin {
+            srcDir 'src/main/kotlin'
+        }
+        resources {
+            srcDir "'src/main/resources"
+        }
+    }
+
+    test {
+        java {
+            srcDir 'src/test/kotlin'
+        }
+        resources {
+            srcDir "src/test/resources"
+        }
+    }
+}
 
