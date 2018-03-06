@@ -1,18 +1,18 @@
 package donhk.boot
 
 import donhk.hiking.PathScanner
-import donhk.utils.MessageBundle
+import java.util.*
 
 class Streamer {
     companion object {
-        val data = MessageBundle("resources/main/data.properties")
+        val data = ResourceBundle.getBundle("data")
         @JvmStatic
         fun main(args: Array<String>) {
             println("Hello world this is a test")
             val scanner = PathScanner("C:\\media")
             println("scan")
             scanner.scan()
-            val hostname = data.get("db.hostname")
+            val hostname = data.getString("db.hostname")
             print("hostname $hostname")
         }
     }

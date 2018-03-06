@@ -42,22 +42,17 @@ compileTestKotlin {
 }
 
 sourceSets {
-    main {
-        kotlin {
-            srcDir 'src/main/kotlin'
-        }
-        resources {
-            srcDir "'src/main/resources"
-        }
-    }
+    main.java.srcDirs += 'src/main/kotlin/'
+    test.java.srcDirs += 'src/test/kotlin/'
+}
 
-    test {
-        java {
-            srcDir 'src/test/kotlin'
-        }
-        resources {
-            srcDir "src/test/resources"
-        }
+jar {
+    manifest {
+        attributes 'Main-Class': 'donhk.boot.Streamer'
     }
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
