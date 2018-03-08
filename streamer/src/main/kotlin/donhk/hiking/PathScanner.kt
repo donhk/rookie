@@ -1,25 +1,59 @@
 package donhk.hiking
 
 import com.mpatric.mp3agic.Mp3File
+import donhk.utils.Track
 import java.io.File
 
 class PathScanner constructor(private val path: String) {
 
-    fun scan(): List<String> {
-        println("Scanning files")
+    fun scan(): List<Track> {
         val files = mutableListOf<File>()
+        val tracks = mutableListOf<Track>()
         File(path).walkTopDown().filter(File::isFile).filter { file -> file.name.endsWith(".mp3", true) }.toCollection(files)
         println("finished ${files.size}")
         files.forEach { song ->
-            processSong(song)
+            val mp3File = Mp3File(song.absolutePath)
+            val track = Track()
+            when {
+                mp3File.hasId3v2Tag() -> {
+                    val meta = mp3File.id3v2Tag
+                    meta.title?.let { t -> track.title = t }
+                    track.genre = meta.toString()
+                    track.length = mp3File.lengthInSeconds
+                    track.album = meta.album
+                    track.year = meta.year
+                    track.trackNo = meta.track
+                    track.bitrate = mp3File.bitrate
+                    track.size = mp3File.length
+                    track.location = song.absolutePath
+                }
+                mp3File.hasId3v1Tag() -> {
+                    val meta = mp3File.id3v1Tag
+                    meta.title?.let { t -> track.title = t }
+                    track.genre = meta.toString()
+                    track.length = mp3File.lengthInSeconds
+                    track.album = meta.album
+                    track.year = meta.year
+                    meta.track?.let { t -> track.trackNo = t }
+                    track.bitrate = mp3File.bitrate
+                    track.size = mp3File.length
+                    track.location = song.absolutePath
+                }
+                else -> {
+                    track.title = song.name
+                    track.genre = ""
+                    track.length = mp3File.lengthInSeconds
+                    track.album = ""
+                    track.year = ""
+                    track.trackNo = ""
+                    track.bitrate = mp3File.bitrate
+                    track.size = mp3File.length
+                    track.location = song.absolutePath
+                }
+            }
+            tracks.add(track)
         }
-        return listOfNotNull<String>(null)
-    }
-
-    private fun processSong(song: File) {
-        val mp3File = Mp3File(song.absolutePath)
-        println("${mp3File.filename} bitrate ${mp3File.bitrate} album ${mp3File.id3v2Tag}")
-
+        return tracks
     }
 
 }

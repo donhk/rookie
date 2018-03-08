@@ -1,17 +1,21 @@
 package donhk.utils
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.ektorp.support.CouchDbDocument
+import org.ektorp.support.TypeDiscriminator
 
+//https://helun.github.io/Ektorp/tutorial.html
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Track constructor() {
-    public var _id: String = ""
-    public var title: String = ""
-    public var location: String = ""
-    public var genre: String = ""
-    public var length: Long = 0
-    public var album: String = ""
-    public var year: Int = 0
-    public var trackNo: Int = 0
-    public var bitrate: String = ""
-    public var size: Double = 0.0
+class Track : CouchDbDocument() {
+    private val serialVersionUID = 1L
+    var title: String = ""
+    @TypeDiscriminator
+    var location: String = ""
+    var genre: String = ""
+    var length: Long = 0
+    var album: String = ""
+    var year: String = ""
+    var trackNo: String = ""
+    var bitrate: Int = 0
+    var size: Long = 0
 }
