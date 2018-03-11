@@ -7,9 +7,8 @@ import org.ektorp.support.TypeDiscriminator
 //https://helun.github.io/Ektorp/tutorial.html
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Track : CouchDbDocument() {
-    private val serialVersionUID = 1L
     var title: String = ""
-    @TypeDiscriminator
+    @TypeDiscriminator("location")
     var location: String = ""
     var genre: String = ""
     var length: Long = 0

@@ -1,6 +1,7 @@
 package donhk.hiking
 
 import com.mpatric.mp3agic.Mp3File
+import donhk.utils.HashUtils
 import donhk.utils.Track
 import java.io.File
 
@@ -14,11 +15,12 @@ class PathScanner constructor(private val path: String) {
         files.forEach { song ->
             val mp3File = Mp3File(song.absolutePath)
             val track = Track()
+            track.id = HashUtils.sha1(song.absolutePath).substring(0, 12).toLowerCase()
             when {
                 mp3File.hasId3v2Tag() -> {
                     val meta = mp3File.id3v2Tag
                     meta.title?.let { t -> track.title = t }
-                    track.genre = meta.toString()
+                    track.genre = meta.genreDescription
                     track.length = mp3File.lengthInSeconds
                     track.album = meta.album
                     track.year = meta.year
@@ -30,7 +32,7 @@ class PathScanner constructor(private val path: String) {
                 mp3File.hasId3v1Tag() -> {
                     val meta = mp3File.id3v1Tag
                     meta.title?.let { t -> track.title = t }
-                    track.genre = meta.toString()
+                    track.genre = meta.genreDescription
                     track.length = mp3File.lengthInSeconds
                     track.album = meta.album
                     track.year = meta.year
