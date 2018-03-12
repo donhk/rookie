@@ -1,0 +1,20 @@
+{
+  "name": "webx",
+  "version": "1.0.0",
+  "description": "web interface for playing music",
+  "main": "webx.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon webx.js"
+  },
+  "author": "donhk",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "html": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  }
+}

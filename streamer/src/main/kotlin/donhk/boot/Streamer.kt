@@ -1,3 +1,5 @@
+//https://github.com/JetBrains/Exposed
+//https://github.com/JetBrains/Exposed/wiki/DAO#basic-crud-operations
 package donhk.boot
 
 import donhk.hiking.PathScanner
