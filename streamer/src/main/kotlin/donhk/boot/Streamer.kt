@@ -24,9 +24,9 @@ class Streamer {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            Database.connect("jdbc:h2:tcp://$hostname:$port/$database", driver = "org.h2.Driver", user = user, password = pass)
+            Database.connect("jdbc:mysql://$hostname:$port/$database", driver = "com.mysql.jdbc.Driver", user = user, password = pass)
             transaction {
-                //drop(Tracks, Requests)
+                drop(Tracks, Requests)
                 if (!Tracks.exists()) {
                     create(Tracks)
                 }
